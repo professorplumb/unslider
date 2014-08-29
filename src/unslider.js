@@ -31,9 +31,9 @@
 			autoplay: true  // enable autoplay on initialisation
 		};
 
-		_.init = function(el, o) {
+		_.init = function(el, opts) {
 			//  Check whether we're passing any options in to Unslider
-			_.o = $.extend(_.o, o);
+			_.o = $.extend(_.o, opts);
 
 			_.el = el;
 			_.ul = el.find(_.o.items);
@@ -71,7 +71,7 @@
 
 			//  Autoslide
 			o.autoplay && setTimeout(function() {
-				if (o.delay | 0) {
+				if (o.delay || 0) {
 					_.play();
 
 					if (o.pause) {
@@ -79,8 +79,8 @@
 							_.stop();
 							e.type == 'mouseout' && _.play();
 						});
-					};
-				};
+					}
+				}
 			}, o.init | 0);
 
 			//  Keypresses
@@ -95,7 +95,7 @@
 					else if (key == 27)
 						_.stop(); // Esc
 				});
-			};
+			}
 
 			//  Dot pagination
 			o.dots && nav('dot');
@@ -118,7 +118,7 @@
 						li.css({ width: width + 'px' });
 					}, 50);
 				}).resize();
-			};
+			}
 
 			//  Move support
 			if ($.event.special['move'] || $.Event('move')) {
@@ -144,7 +144,7 @@
 						_.to(_.i);
 					}
 				});
-			};
+			}
 
 			return _;
 		};
@@ -185,7 +185,7 @@
 
 					$.isFunction(o.complete) && !callback && o.complete(el, target);
 				});
-			};
+			}
 		};
 
 		//  Autoplay functionality
@@ -221,13 +221,13 @@
 			} else {
 				html = '<div class="';
 				html = html + name + 's">' + html + name + ' prev">' + _.o.prev + '</div>' + html + name + ' next">' + _.o.next + '</div></div>';
-			};
+			}
 
 			_.el.addClass('has-' + name + 's').append(html).find('.' + name).click(function() {
 				var me = $(this);
 				me.hasClass('dot') ? _.stop().to(me.index()) : me.hasClass('prev') ? _.prev() : _.next();
 			});
-		};
+		}
 	};
 
 	//  Create a jQuery plugin
