@@ -162,7 +162,7 @@
 				current = _.i,
 				target = li.eq(index);
 
-			$.isFunction(o.starting) && !callback && o.starting(el, li.eq(current));
+			$.isFunction(o.starting) && o.starting(el, li.eq(current));
 
 			//  To slide or not to slide
 			if ((!target.length || index < 0) && o.loop == f) return;
@@ -183,7 +183,8 @@
 				el.animate(obj, speed, easing) && ul.animate($.extend({left: '-' + index + '00%'}, obj), speed, easing, function(data) {
 					_.i = index;
 
-					$.isFunction(o.complete) && !callback && o.complete(el, target);
+					$.isFunction(o.complete) && o.complete(el, target);
+                    callback && callback(el, target);
 				});
 			}
 		};
