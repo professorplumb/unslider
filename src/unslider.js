@@ -189,6 +189,9 @@
 			}
 		};
 
+        // Synonym
+        _.move = _.to;
+
 		//  Autoplay functionality
 		_.play = function() {
 			_.t = setInterval(function() {
