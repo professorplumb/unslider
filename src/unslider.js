@@ -23,8 +23,8 @@
 			prev: '&larr;', // text or html inside prev button (string)
 			next: '&rarr;', // same as for prev option
 			fluid: f,       // is it a percentage width? (boolean)
-			starting: f,    // invoke before animation (function with argument)
-			complete: f,    // invoke after animation (function with argument)
+			starting: f,    // invoke before animation (function (element, startingItem))
+			complete: f,    // invoke after animation (function (element, targetItem))
 			items: '>ul',   // slides container selector
 			item: '>li',    // slidable items selector
 			easing: 'swing',// easing function to use for animation
