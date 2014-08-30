@@ -2,6 +2,7 @@
  *   Unslider by @idiot and @damirfoy
  *   Contributors:
  *   - @ShamoX
+ *   - @eric_plumb
  *
  */
 
@@ -12,6 +13,7 @@
 
 		//  Set some options
 		_.o = {
+            startAt: 0,     // initial index (integer)
 			speed: 500,     // animation speed, false for no transition (integer or boolean)
 			delay: 3000,    // delay between slides, false for no autoplay (integer or boolean)
 			init: 0,        // init delay, false for no delay (integer or boolean)
@@ -48,6 +50,11 @@
 				if (height > _.max[1]) _.max[1] = height;
 			});
 
+            // Bounds check on starting index
+            if (_.o.startAt < 0)
+                _.o.startAt = 0;
+            else if (_.o.startAt > _.li.length)
+                _.o.startAt = _.li.length - 1;
 
 			//  Cached vars
 			var o = _.o,
@@ -55,14 +62,14 @@
 				li = _.li,
 				len = li.length;
 
-			//  Current indeed
-			_.i = 0;
+			//  Current index
+			_.i = _.o.startAt;
 
 			//  Set the main element
-			el.css({width: _.max[0], height: li.first().outerHeight(), overflow: 'hidden'});
+			el.css({width: _.max[0], height: li.eq(_.i).outerHeight() + 'px', overflow: 'hidden'});
 
 			//  Set the relative widths
-			ul.css({position: 'relative', left: 0, width: (len * 100) + '%'});
+			ul.css({position: 'relative', left: (_.i * -100) + '%', width: (len * 100) + '%'});
 			if(o.fluid) {
 				li.css({'float': 'left', width: (100 / len) + '%'});
 			} else {
@@ -109,7 +116,7 @@
 					_.r && clearTimeout(_.r);
 
 					_.r = setTimeout(function() {
-						var styl = {height: li.eq(_.i).outerHeight()},
+						var styl = {height: li.eq(_.i).outerHeight() + 'px'},
 							width = el.outerWidth();
 
 						ul.css(styl);
@@ -174,7 +181,7 @@
 
 			var speed = callback ? 5 : o.speed | 0,
 				easing = o.easing,
-				obj = {height: target.outerHeight()};
+				obj = {height: target.outerHeight() + 'px'};
 
 			if (!ul.queue('fx').length) {
 				//  Handle those pesky dots
